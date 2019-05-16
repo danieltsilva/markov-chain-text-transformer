@@ -1,0 +1,6 @@
+[submodule "mctt-framework"]
+	path = mctt-framework
+	url = git@github.com:danieltsilva/mctt-framework.git
+[submodule "mctt-ui"]
+	path = mctt-ui
+	url = git@github.com:danieltsilva/mctt-ui.git
