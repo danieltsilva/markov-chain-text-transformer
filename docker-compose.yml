@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+
+  mctt-ui:
+    image: mctt-ui
+    build:
+      context: ./mctt-ui
+    ports:
+      - "3000:80"
+    depends_on:
+      - mctt-framework
+
+  mctt-framework:
+    image: mctt-framework
+    build: 
+      context: ./mctt-framework
+    ports:
+      - "8080:8080"
+    volumes:
+      - m2:/root/.m2
+    depends_on:
+      - mctt-mysql
+
+  mctt-mysql:
+    image: mysql:5.7
+    secrets:
+      - mysql_root_pass
+      - mysql_mctt_pass
+    environment:
+      MYSQL_ROOT_PASSWORD: animallogic
+      MYSQL_DATABASE: animallogic
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: animallogic
+    ports:
+      - '3306:3306'
+    volumes:
+      - mctt-mysql-data:/var/lib/mysql
+
+volumes:
+  m2:
+  mctt-mysql-data:
+
+secrets:
+  mysql_root_pass:
+    file: ./secrets/mysql_root_pass
+  mysql_mctt_pass:
+    file: ./secrets/mysql_mctt_pass
